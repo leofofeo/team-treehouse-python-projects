@@ -1,5 +1,5 @@
 #create a shopping list that allows someone to add items one by one to it
-#if someone types in 'HELP' we should display the commands available to them ('HELP', 'DONE', 'SHOW'
+#if someone types in 'HELP' we should display the commands available to them ('HELP', 'DONE', 'SHOW')
 #'DONE' will finish the shopping list editing
 #'SHOW' will show us all items currently in shopping list
 
@@ -8,7 +8,7 @@
 def start_program():
     print("What do you want to add to your shopping list? Type 'HELP' to see more options, and 'DONE' to finish adding items to your list.")
     
-    #start_shopping_list returns the final shopping list
+    #start_shopping_list() returns the final shopping list
     final_shopping_list = '\n '.join(start_shopping_list())
 
     print("You're done. The items on your shopping list are:")
