@@ -3,9 +3,8 @@ import random
 def launch_game():
 
     #computer selects a number from 1-10 randomly, player choice initialized
-    options = [1,2,3,4,5,6,7,8,9,10]
 
-    comp_choice = random.choice(options)
+    comp_choice = random.randint(1,10)
     player_choice = 0
 
     while player_choice != comp_choice:
