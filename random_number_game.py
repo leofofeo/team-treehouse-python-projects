@@ -1,5 +1,17 @@
 import random
 
+def launch_program():
+    
+    while True:
+        launch_game()
+        user_input = str.lower(input("Type 'y' if you want to play again \n"))
+        if user_input == 'y':
+            continue
+        else:
+            print("Ok. Game over.")
+            break
+ 
+
 def launch_game():
 
     #computer selects a number from 1-10 randomly, player choice initialized
@@ -25,5 +37,5 @@ def launch_game():
             print("Lower")
             continue
     print("Yes! The number was {}".format(comp_choice))
-  
-launch_game()
+
+launch_program()    
