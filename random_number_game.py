@@ -6,10 +6,15 @@ def launch_game():
 
     comp_choice = random.randint(1,10)
     player_choice = 0
+    number_range = list(range(1,11))
 
     while player_choice != comp_choice:
         player_choice = int(input("Select a number from 1-10 \n"))
-        if player_choice < comp_choice:
+        
+        if player_choice not in number_range:
+            print("That's not a number between 1 and 10. Try again, fool.")
+            continue
+        elif player_choice < comp_choice:
             print("Higher")
             continue
         elif player_choice > comp_choice:
