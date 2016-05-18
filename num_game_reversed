@@ -1,0 +1,45 @@
+import random
+#you select a number from 1-10
+#computer must guess whether the number is right
+#you tell the computer whether it's higher or lower
+#repeat until the computer guesses
+
+
+while True:
+    possible_range = list(range(1,11))
+    
+    try:
+        player_choice = int(input("Select a number from 1 -  10 \n"))
+        
+    except:
+        print("That's not a number. Try again.")
+        continue
+    
+    if player_choice not in possible_range:
+            print("You selected {}; the number must be between 1-10".format(player_choice))
+            continue
+                
+    min_value = 1
+    max_value = 10
+    
+    while comp_choice != player_choice:
+        
+        guessing_range = range(min_value, max_value + 1)
+        comp_choice = random.choice(guessing_range)
+        player_guidance = str.lower(input("Computer has selected {}. Is your number 'higher' or 'lower'?  \n"))
+        
+        if player_guidance != 'higher' or player_guidance != 'lower':
+            print('You have to specify whether the computer needs to guess higher or lower.')
+            continue
+
+        if player_guidance == 'higher':
+            min_value = comp_choice
+            continue
+        elif player_guidance == 'lower':
+            max_value = comp_choice
+            continue
+    
+print("The computer guessed {}, and your number was {}".format(comp_choice, player_choice)
+   
+            
+                    
