@@ -9,7 +9,11 @@ def launch_game():
     number_range = list(range(1,11))
 
     while player_choice != comp_choice:
-        player_choice = int(input("Select a number from 1-10 \n"))
+        try:
+            player_choice = int(input("Select a number from 1-10 \n"))
+        except ValueError:
+            print("That wasn't a number, fool. Try again.")
+            continue
         
         if player_choice not in number_range:
             print("That's not a number between 1 and 10. Try again, fool.")
