@@ -3,15 +3,12 @@ import random
 #create range of possible integers
 
 options = range(1,11)
-for i in options:
-    print(i)
-
 
 while True:
     
     #player selects number
     try:
-        player_choice = int(input("Select a number from 1 to ten > "))
+        player_choice = int(input("Select a number from 1 to 10 > "))
     except ValueError:
         print("That's not a valid number. Try again, bruh.")
         continue
@@ -21,39 +18,42 @@ while True:
         continue
     
     #initialize max range variables and comp_choice
-    max_int = 10
+    max_int = 11
     min_int = 1
     comp_choice = 0
-    number_of_rounds = 0
+    number_of_rounds = 1
     
     print("Type 'higher' if the computer's guess is too low, or 'lower' if the computer's guess is too high.")
+    input("Hit any key to continue.")
     
     while comp_choice != player_choice:
         
         #computer selects number
-        options = range(min_int, max_int + 1)
+        options = range(min_int, max_int)
         comp_choice = random.choice(options)
+        if comp_choice == player_choice:
+            break
         
         #player is presented with computer number, tells the computer either higher or lower
-        player_guidane = str.lower(input("The computer guessed {}. 'higher' or 'lower'?\n".format(comp_choice)))
-        if player_guidance != 'higher' or player_guidance != 'lower':
+        player_guidance = input("The computer guessed {}. 'higher' or 'lower'?\n".format(comp_choice)).strip(' ')
+        
+        if player_guidance != 'higher' and player_guidance != 'lower':
             print("Not a valid instruction. You must write either 'higher' or 'lower'.")
             continue
         
         if player_guidance == 'lower':
-            print("The computer's guess was too high. It'll try again.")
             max_int = comp_choice
             number_of_rounds += 1
             continue
-        elif player_guidace == 'higher':
-            print("The computer's guess wass too low. It'll try again.")
-            min_int = comp_choice
+        elif player_guidance == 'higher':
+            min_int = comp_choice + 1
             number_of_rounds += 1
             continue
     
     #game ends when computer guesses player's number
-    print("Your number was {}. After {} rounds, the computer guessed {}.".format(player_choice, number_of_rounds, comp_choice))
+    print("The computer guessed {}. Your number was {}, so after {} rounds, the game is over.".format(comp_choice, player_choice, number_of_rounds))
     print("Game over.")
+    break
         
     
     
