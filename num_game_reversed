@@ -37,10 +37,18 @@ def launch_game(new_game = False):
         
             #player is presented with computer number, tells the computer either higher or lower
             player_guidance = input("The computer guessed {}. 'higher' or 'lower'?\n".format(comp_choice)).strip(' ')
-        
-            if player_guidance != 'higher' and player_guidance != 'lower':
+            while player_guidance != 'higher' and player_guidance != 'lower':
                 print("Not a valid instruction. You must write either 'higher' or 'lower'.")
                 continue
+            
+            while player_guidance == 'higher' or player_guidance == 'lower':
+                if (comp_choice > player_choice and player_guidance == 'higher') or (comp_choice < player_choice and player_guidance == 'lower'):
+                    print("That's not true! You have to give fair instructions.")
+                    player_guidance = str.lower(input('Higher or lower? > '))
+                    continue
+                else:
+                    break
+          
         
             if player_guidance == 'lower':
                 max_int = comp_choice
