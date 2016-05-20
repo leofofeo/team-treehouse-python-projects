@@ -60,7 +60,10 @@ def launch_game(new_game = False):
                 continue
     
         #game ends when computer guesses player's number
-        print("The computer guessed {}. Your number was {}, so after {} rounds, the game is over.".format(comp_choice, player_choice, number_of_rounds))
+        if comp_choice == 1:
+            print("The computer guessed {}. Your number was {}, so after {} round, the game is over.".format(comp_choice, player_choice, number_of_rounds))
+        else:    
+            print("The computer guessed {}. Your number was {}, so after {} rounds, the game is over.".format(comp_choice, player_choice, number_of_rounds))
         print("Game over.")
         play_again = str.lower(input("Do you want to play again? Hit 'y' for yes. Any other key will end the game. > "))
         if play_again == 'y':
