@@ -2,6 +2,27 @@ import random
 
 #create range of possible integers
 
+def check_player_response(c_choice, p_choice):
+    
+    #player is presented with computer number, tells the computer either higher or lower
+    response = str.lower(input("The computer guessed {}. Too high or too low? Reminder: your guess was {}\n".format(c_choice,p_choice)).strip(' '))
+    
+    # ensures player is actually giving instructions as specified
+    while response != 'too low' and response != 'too high':
+        print("Not a valid instruction.")
+        response = str.lower(check_player_response(c_choice, p_choice)).strip(' ')
+        continue
+            
+    # ensures player is giving fair instructions
+    while response == 'too low' or response == 'too high':
+        if (c_choice > p_choice and response == 'too low') or (c_choice < p_choice and response == 'too high'):
+            print("That's not true! You have to give fair instructions.")
+            response = str.lower(check_player_response(c_choice, p_choice)).strip(' ')
+            continue
+        else:
+            break
+    return response
+
 def launch_game(new_game = False):
     
     while True:
@@ -9,7 +30,7 @@ def launch_game(new_game = False):
     
         #player selects number
         try:
-            player_choice = int(input("Select a number from 1 to 10 > "))
+            player_choice = int(input("Select a whole number from 1 to 10 > "))
         except ValueError:
             print("That's not a valid number. Try again, bruh.")
             continue
@@ -24,7 +45,7 @@ def launch_game(new_game = False):
         comp_choice = 0
         number_of_rounds = 1
     
-        print("Type 'higher' if the computer's guess is too low, or 'lower' if the computer's guess is too high.")
+        print("Type 'too low' if the computer's guess is too low, or 'too high' if the computer's guess is too high.")
         input("Hit any key to continue.")
     
         while comp_choice != player_choice:
@@ -36,31 +57,20 @@ def launch_game(new_game = False):
                 break
         
             #player is presented with computer number, tells the computer either higher or lower
-            player_guidance = input("The computer guessed {}. 'higher' or 'lower'?\n".format(comp_choice)).strip(' ')
-            while player_guidance != 'higher' and player_guidance != 'lower':
-                print("Not a valid instruction. You must write either 'higher' or 'lower'.")
-                continue
             
-            while player_guidance == 'higher' or player_guidance == 'lower':
-                if (comp_choice > player_choice and player_guidance == 'higher') or (comp_choice < player_choice and player_guidance == 'lower'):
-                    print("That's not true! You have to give fair instructions.")
-                    player_guidance = str.lower(input('Higher or lower? > '))
-                    continue
-                else:
-                    break
-          
-        
-            if player_guidance == 'lower':
+            player_guidance = check_player_response(comp_choice, player_choice)
+            
+            if player_guidance == 'too high':
                 max_int = comp_choice
                 number_of_rounds += 1
                 continue
-            elif player_guidance == 'higher':
+            elif player_guidance == 'too low':
                 min_int = comp_choice + 1
                 number_of_rounds += 1
                 continue
     
         #game ends when computer guesses player's number
-        if comp_choice == 1:
+        if number_of_rounds == 1:
             print("The computer guessed {}. Your number was {}, so after {} round, the game is over.".format(comp_choice, player_choice, number_of_rounds))
         else:    
             print("The computer guessed {}. Your number was {}, so after {} rounds, the game is over.".format(comp_choice, player_choice, number_of_rounds))
