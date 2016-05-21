@@ -10,10 +10,11 @@ def exclude_duplicate_letters(sample_list):
     return unique_char_list
 
 
-#computer selects word
 alphabet = 'abcdefghijklmnopqrstuvwxyz'
 letters = list(alphabet)
 word_list = ['horse', 'cowboy', 'cow', 'westernlands', 'ennui']
+
+#computer selects word
 comp_choice = random.choice(word_list)
 
 #computer's word is broken down to characters
@@ -25,7 +26,7 @@ comp_choice_unique_chars_dupe = exclude_duplicate_letters(comp_choice_as_list)
 player_correct_guesses = []
 player_total_guesses = []
 
-#number of attempts initialized to 10
+#number of attempts initialized to 5
 number_of_attempts = 5
 
 #player attempts to make guess; various checks need to happen here to make sure that guess is actually a letter, that it's not a letter that has already been guessed, and that they're only guessing one letter at a time
