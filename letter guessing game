@@ -1,8 +1,10 @@
+import os
 import random
 
-def exclude_duplicate_letters(sample_list):
+def exclude_duplicate_letters(string):
+    word_array = list(string)
     unique_char_list = []
-    for letter in sample_list:
+    for letter in word_array:
         if letter not in unique_char_list:
             unique_char_list.append(letter)
         else:
@@ -10,66 +12,110 @@ def exclude_duplicate_letters(sample_list):
     return unique_char_list
 
 
-alphabet = 'abcdefghijklmnopqrstuvwxyz'
-letters = list(alphabet)
-word_list = ['horse', 'cowboy', 'cow', 'westernlands', 'ennui']
-
-#computer selects word
-comp_choice = random.choice(word_list)
-
-#computer's word is broken down to characters
-comp_choice_as_list = list(comp_choice)
-
-#computer's character list is adjusted to remove any duplicate letters
-comp_choice_unique_chars = exclude_duplicate_letters(comp_choice_as_list)
-comp_choice_unique_chars_dupe = exclude_duplicate_letters(comp_choice_as_list)
-player_correct_guesses = []
-player_total_guesses = []
-
-#number of attempts initialized to 5
-number_of_attempts = 5
-
-#player attempts to make guess; various checks need to happen here to make sure that guess is actually a letter, that it's not a letter that has already been guessed, and that they're only guessing one letter at a time
-print("The computer's word has {} letters, and {} unique letters".format(len(comp_choice_as_list), len(comp_choice_unique_chars)))
-
-while number_of_attempts != 0:
-    player_guess = str.lower(input("Guess a letter > "))
-    
-    if len(player_guess) != 1:
-        print("You may only guess one letter at a time.")
-        continue
-    elif player_guess not in letters:
-        print("You must select an actual letter.")
-        continue
-    elif player_guess in player_total_guesses:
-        print("You've already tried that.")
-        continue
-        
-    #once checks are over, compare player's guess to computer's list of characters in computer's selected word
-
-    #if guess is in computer's list, we inform the player of such and let him or her know how many more letters are left
-    if player_guess in comp_choice_unique_chars:
-        player_correct_guesses.append(player_guess)
-        if player_guess not in player_total_guesses:
-            player_total_guesses.append(player_guess)
-        comp_choice_unique_chars_dupe.remove(player_guess)
-        print("Yes! There {} unique letters left.".format(len(comp_choice_unique_chars_dupe)))
-    
-    # if guess isn't in the computer's list, deduct one attempt, and try again     
-    elif player_guess not in comp_choice_unique_chars:
-        if player_guess not in player_total_guesses:
-            player_total_guesses.append(player_guess)
-        print("Nope! Try again. So far, you've guessed:")
-        print(', '.join(player_total_guesses))
-        number_of_attempts -= 1
-        if number_of_attempts == 0:
-            print("You ran out of attempts. Better luck next time!")
-            continue   
-              
-    if sorted(player_correct_guesses) == sorted(comp_choice_unique_chars):
-        print("You did it! The computer's original word was {}. The letters you guessed correctly were:".format(comp_choice))
-        print(', '.join(player_correct_guesses))
-        break
+def clear():
+    if os.name == 'nt':
+        os.system('cls')
     else:
-        continue
+        os.system('clear')
+ 
 
+def draw(computer_word, correct_guesses,incorrect_guesses, attempts):
+    for letter in computer_word:
+        if letter in correct_guesses:
+            print(letter, end='')
+        else:
+            print('_', end='')
+    print('\n')
+    print('Attempts left: {}/7'.format(attempts))
+    print('')
+    print('Incorrect guesses so far:\n')
+    print(', '.join(incorrect_guesses))
+    print('')
+    
+
+def player_makes_guess(computer_word, comp_unique_letters, correct_guesses, incorrect_guesses, attempts):
+    alphabet = list('abcdefghijklmnopqrstuvwxy')
+    clear()
+    draw(computer_word, correct_guesses, incorrect_guesses, attempts)
+    
+    while True:
+        player_guess = str.lower(input("Guess a letter > "))
+        
+        if len(player_guess) != 1:
+            print("You may only guess one letter at a time.")
+            continue
+        elif player_guess not in alphabet:
+            print("You must select an actual letter.")
+            continue
+        elif player_guess in incorrect_guesses or player_guess in correct_guesses:
+            print("You've already tried that.")
+            continue
+        else:
+            break
+    
+    return player_guess
+        
+                
+def play_game():
+    #computer selects word from list
+    words = [
+        'sofa',
+        'chair',
+        'table',
+        'apartment',
+        'dresser',
+        'couch',
+        'bureau',
+        'nightlight'
+    ]
+    
+    comp_word = random.choice(words)
+    
+    #get unique number of letters in computer's word
+    comp_unique_letters = exclude_duplicate_letters(comp_word)
+    
+    #player is presented with info from the computer's word
+    print("The computer's word has {} letters, and {} unique letters.".format(len(comp_word), len(comp_unique_letters)))
+    input('Hit any key to continue ')
+    
+    correct_guesses = []
+    incorrect_guesses = []
+    attempts = 7
+    
+    #player guesses a letter in computer's word
+    while attempts != 0:
+        
+        #check to make sure player's guess is a legitimate guess
+        player_guess = player_makes_guess(comp_word, comp_unique_letters, correct_guesses,incorrect_guesses, attempts)
+ 
+        #if player gets it right, word is added to list of correct guesses
+        # otherwise word is added to list of incorrect guesses, and player gets a strike
+        if player_guess in comp_unique_letters:
+            print("Yes! Good guess.")
+            correct_guesses.append(player_guess)
+            input("Hit any key to continue ")
+        else:
+            attempts -= 1
+            if attempts == 0:
+                print("Wrong!\n")
+            else:
+                print("Wrong! Try again.\n")
+            incorrect_guesses.append(player_guess)
+            
+            input("Hit any key to continue ")
+        
+        if sorted(correct_guesses) == sorted(comp_unique_letters):
+            print("You did it! You guessed the computer's word!")
+            break
+            
+        
+        if attempts == 0:
+            print("You ran out of tries!")
+            print("Game over")
+            input("Hit any key to continue ")
+            clear()
+            break
+        
+play_game()          
+    
+    
