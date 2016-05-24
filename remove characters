@@ -1,0 +1,17 @@
+
+def remove_characters(char_list, string):
+
+    string_as_list = list(string)
+    for char in string_as_list:
+        if char in char_list:
+            string_as_list.remove(char)
+    
+    string = "".join(string_as_list)
+    print(string)
+    
+vowels = ['a', 'e', 'i', 'o', 'u']
+
+sentence = 'there once was a woman with skinny bones, ooooh ooooh oooh oooooooooh'
+
+remove_characters(vowels, sentence)
+
