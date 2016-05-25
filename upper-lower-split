@@ -1,0 +1,17 @@
+#function takes string, returns first half as lower case, second half as upper case
+
+def sillycase(string):
+    if len(string) % 2 == 0:
+        string_length_middle = int(len(string) /2)
+    else:
+        string_length_middle = int(len(string) /2) + 1
+    
+    first_half_range = list(string)[:string_length_middle]
+    second_half_range = list(string)[string_length_middle:]
+                                     
+    first_half = ''.join(first_half_range)
+    second_half = ''.join(second_half_range)
+  
+    return first_half.lower() + second_half.upper()
+
+print(sillycase('California'))
